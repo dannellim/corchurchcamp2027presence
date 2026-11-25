@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Chapel of the Resurrection//COR Church Camp 2027//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:cor-church-camp-2027@dannellim.github.io
+DTSTAMP:20261126T000000Z
+DTSTART;VALUE=DATE:20270529
+DTEND;VALUE=DATE:20270601
+SUMMARY:COR Church Camp 2027
+LOCATION:Four Points by Sheraton Desaru\, Jalan Kempas 2\, Taman Desaru Utama\, 81930 Bandar Penawar\, Johor\, Malaysia
+DESCRIPTION:Save the date! COR Church Camp 2027 by Chapel of the Resurrection. https://dannellim.github.io/corchurchcamp2027presence/
+URL:https://dannellim.github.io/corchurchcamp2027presence/
+END:VEVENT
+END:VCALENDAR
