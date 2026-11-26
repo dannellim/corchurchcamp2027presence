@@ -17,6 +17,8 @@ Save-the-date website for **COR Church Camp 2027** by Chapel of the Resurrection
 | `assets/cor-church-camp-2027.ics` | Calendar invite for Apple Calendar and Outlook |
 | `assets/hotel.jpg`, `pool.jpg`, `room.jpg` | Hotel photos © Four Points by Sheraton Desaru (Marriott) |
 | `assets/committee.jpg` | Camp committee group photo |
+| `assets/qr-google.svg`, `qr-apple.svg`, `qr-waze.svg` | QR codes for directions to the hotel |
+| `assets/qr-website.svg` | QR code that opens this website |
 
 ## Updating the site
 

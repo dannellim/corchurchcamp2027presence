@@ -117,7 +117,14 @@
   .photos .big { grid-column: span 2; aspect-ratio: 16 / 8; }
   .photos .small { aspect-ratio: 16 / 10; }
   .credit { font-size: 13px; color: var(--ink); margin: 8px 0 0; }
+  .qr-hint { margin: 0 0 12px; color: var(--ink); font-size: 15px; }
+  .qrs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 440px; }
+  .qr { display: flex; flex-direction: column; align-items: center; gap: 8px; background: var(--paper); border: 2px solid var(--foam-line); border-radius: 14px; padding: 12px 10px 10px; text-decoration: none; color: var(--sea); font-weight: 700; font-size: 15px; text-align: center; line-height: 1.2; }
+  .qr img { width: 100%; height: auto; aspect-ratio: 1; }
+  .qr:hover { border-color: var(--teal); }
+  .qr:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   @media (max-width: 820px) { .where-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .qrs { gap: 8px; } .qr { padding: 8px 6px; font-size: 14px; } }
 
   /* Food & shopping */
   .poi-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
@@ -130,6 +137,11 @@
   .card p { margin: 0 0 12px; color: var(--ink); font-size: 16px; line-height: 1.45; }
   .card .dist { font-weight: 700; color: var(--teal); font-size: 15px; display: flex; gap: 6px; align-items: center; margin: 0; }
   .card .dist svg { width: 16px; height: 16px; }
+  a.card { display: block; text-decoration: none; color: inherit; transition: border-color .15s, box-shadow .15s; }
+  a.card:hover { border-color: var(--teal); box-shadow: 0 6px 18px rgba(14, 58, 68, .10); }
+  a.card:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .card .more { display: block; margin-top: 12px; font-weight: 700; font-size: 15px; color: var(--coral); }
+  a.card:hover .more { text-decoration: underline; }
   @media (max-width: 820px) { .cards, .cards.two { grid-template-columns: 1fr; } }
 
   /* Committee */
@@ -149,6 +161,10 @@
   .closing .venue { color: var(--sand); margin: 0 0 20px; }
   .closing .soon { color: var(--paper); margin: 0 auto 28px; max-width: 560px; }
   .closing .buttons { justify-content: center; }
+  .closing .share { display: inline-flex; align-items: center; gap: 18px; margin: 36px 16px 8px; background: var(--paper); border-radius: 16px; padding: 12px 24px 12px 12px; text-align: left; }
+  .closing .share img { width: 112px; height: 112px; margin: 0; }
+  .closing .share p { margin: 0; font-size: 16px; line-height: 1.4; color: var(--ink); max-width: 230px; }
+  .closing .share strong { display: block; color: var(--sea); font-size: 19px; margin-bottom: 2px; }
   footer { background: var(--sea); color: var(--sand); font-size: 14px; text-align: center; padding: 8px 16px 28px; }
   footer a { color: var(--sand); }
 </style>
@@ -266,10 +282,11 @@
           <p class="label">ADDRESS</p>
           <address>Jalan Kempas 2, Taman Desaru Utama<br>81930 Bandar Penawar<br>Johor, Malaysia</address>
           <p class="label">GET DIRECTIONS</p>
-          <div class="buttons">
-            <a class="btn btn-sea" href="https://www.google.com/maps/dir/?api=1&amp;destination=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar" target="_blank" rel="noopener">Google Maps</a>
-            <a class="btn btn-sea" href="https://maps.apple.com/?daddr=1.5762856,104.2062895&amp;dirflg=d" target="_blank" rel="noopener">Apple Maps</a>
-            <a class="btn btn-sea" href="https://waze.com/ul?ll=1.5762856,104.2062895&amp;navigate=yes" target="_blank" rel="noopener">Waze</a>
+          <p class="qr-hint">Scan with your phone camera, or tap to open.</p>
+          <div class="qrs">
+            <a class="qr" href="https://www.google.com/maps/dir/?api=1&amp;destination=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar" target="_blank" rel="noopener"><img src="assets/qr-google.svg" alt="QR code for directions in Google Maps" width="132" height="132">Google Maps</a>
+            <a class="qr" href="https://maps.apple.com/?daddr=1.5762856,104.2062895&amp;dirflg=d" target="_blank" rel="noopener"><img src="assets/qr-apple.svg" alt="QR code for directions in Apple Maps" width="132" height="132">Apple Maps</a>
+            <a class="qr" href="https://waze.com/ul?ll=1.5762856,104.2062895&amp;navigate=yes" target="_blank" rel="noopener"><img src="assets/qr-waze.svg" alt="QR code for directions in Waze" width="132" height="132">Waze</a>
           </div>
           <div class="rating">
             <b>4.4</b>
@@ -294,14 +311,14 @@
       <h2>Food &amp; shopping nearby</h2>
       <div class="poi-head"><p class="label">FOOD</p><em>Distances are approximate, from the hotel</em></div>
       <div class="cards">
-        <div class="card"><h3>The Mesh Restaurant</h3><p>All-day dining with Malaysian flavours</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>In the hotel</p></div>
-        <div class="card"><h3>Kedai Kopi Otai</h3><p>Local kopitiam for breakfast &amp; kopi</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>≈ 2 min walk</p></div>
-        <div class="card"><h3>More local eateries</h3><p>Thai, Vietnamese &amp; ayam penyet</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>6–9 min walk</p></div>
+        <a class="card" href="https://maps.google.com/?cid=3858801015707905229" target="_blank" rel="noopener"><h3>The Mesh Restaurant</h3><p>All-day dining with Malaysian flavours</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>In the hotel</p><span class="more">Reviews on Google Maps →</span></a>
+        <a class="card" href="https://maps.google.com/?cid=15894267433109811746" target="_blank" rel="noopener"><h3>Kedai Kopi Otai</h3><p>Local kopitiam for breakfast &amp; kopi</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>≈ 2 min walk</p><span class="more">Reviews on Google Maps →</span></a>
+        <a class="card" href="https://www.google.com/maps/search/restaurants/@1.5762856,104.2062895,17z" target="_blank" rel="noopener"><h3>More local eateries</h3><p>Thai, Vietnamese &amp; ayam penyet</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>6–9 min walk</p><span class="more">Browse on Google Maps →</span></a>
       </div>
       <div class="poi-head"><p class="label">SHOPPING</p></div>
       <div class="cards two">
-        <div class="card"><h3>SKS City Mall</h3><p>Food court, wet market, Desaru Kopitiam, Watsons &amp; MR DIY</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Short walk from the hotel</p></div>
-        <div class="card"><h3>Bandar Penawar town</h3><p>Supermarkets &amp; convenience stores for snacks and essentials</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Around the hotel</p></div>
+        <a class="card" href="https://maps.google.com/?cid=5248542970612041478" target="_blank" rel="noopener"><h3>SKS City Mall</h3><p>Food court, wet market, Desaru Kopitiam, Watsons &amp; MR DIY</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Short walk from the hotel</p><span class="more">Reviews on Google Maps →</span></a>
+        <a class="card" href="https://www.google.com/maps/search/supermarkets/@1.5762856,104.2062895,16z" target="_blank" rel="noopener"><h3>Bandar Penawar town</h3><p>Supermarkets &amp; convenience stores for snacks and essentials</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Around the hotel</p><span class="more">Browse on Google Maps →</span></a>
       </div>
     </div>
   </section>
@@ -334,6 +351,10 @@
       <a class="btn btn-coral" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=COR%20Church%20Camp%202027&amp;dates=20270529/20270601&amp;location=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar%2C%20Johor%2C%20Malaysia&amp;details=Save%20the%20date!%20https%3A%2F%2Fdannellim.github.io%2Fcorchurchcamp2027presence%2F" target="_blank" rel="noopener">Add to Google Calendar</a>
       <a class="btn btn-ghost" href="assets/cor-church-camp-2027.ics" download>Apple / Outlook calendar</a>
     </div>
+    <div class="share">
+      <img src="assets/qr-website.svg" alt="QR code that opens this website" width="112" height="112">
+      <p><strong>Share this page</strong>Scan with your phone camera to open this website.</p>
+    </div>
   </div>
   <svg class="wave" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0 40 C 125 15, 250 65, 375 40 S 625 15, 750 40 S 1000 65, 1000 40 V100 H0 Z" fill="#7FB8B0" opacity="0.30"/>
@@ -341,7 +362,7 @@
     <path d="M0 84 C 160 72, 330 96, 500 84 S 840 72, 1000 84 V100 H0 Z" fill="#F2E6D3" opacity="0.9"/>
   </svg>
 </section>
-<footer>COR Church Camp 2027 · Chapel of the Resurrection · Organised by the El-Pizo cell group<br>Hotel photos © Four Points by Sheraton Desaru (Marriott)</footer>
+<footer>COR Church Camp 2027 · <a href="https://www.cor.org.sg" target="_blank" rel="noopener">Chapel of the Resurrection</a> · Organised by the El-Pizo cell group<br>Hotel photos © Four Points by Sheraton Desaru (Marriott)</footer>
 
 </body>
 </html>
