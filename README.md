@@ -27,7 +27,9 @@ To change wording, edit the English in the HTML or the Chinese in the `ZH` table
 
 | File | What it is |
 |---|---|
-| `index.html` | The whole site: one self-contained page (no build step, no external scripts or fonts) |
+| `index.html` | The whole site: one self-contained page (no build step or external fonts; the only outside script is Cloudflare Turnstile, loaded when someone opens the chat) |
+| `camp-facts.md` | The fact sheet: the only information the camp chat knows |
+| `chat-worker/` | The camp chat's Cloudflare Worker. See [chat-worker/README.md](chat-worker/README.md). |
 | `en/index.html`, `zh/index.html` | Short links that open the site in English or Chinese |
 | `assets/logo.svg` | Camp badge (Presence · Desaru, Malaysia) |
 | `assets/og.png`, `assets/og-zh.png` | Link preview images (English, Chinese) for WhatsApp and social media |
@@ -40,3 +42,7 @@ To change wording, edit the English in the HTML or the Chinese in the `ZH` table
 ## Updating the site
 
 Edit the files and push to `main`. GitHub Pages republishes automatically within a minute or two.
+
+## Camp chat
+
+The "Ask about camp" button opens a small chat that answers questions from `camp-facts.md` only. For anything not yet announced, it says it hasn't been announced yet, and anything not about camp is politely declined. To update what it knows, edit `camp-facts.md` and push. How it works, with diagrams and setup steps: [chat-worker/README.md](chat-worker/README.md).

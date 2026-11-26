@@ -1,0 +1,25 @@
+// Settings for the camp chat Worker. Deploy with: npm run deploy (see README.md).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cor-camp-chat",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+
+  // Workers AI: the model that writes the answers.
+  "ai": { "binding": "AI" },
+
+  // At most 20 questions a minute from one connection (Cloudflare allows a period of 10 or 60 seconds).
+  "ratelimits": [{ "name": "PER_MINUTE", "namespace_id": "2027", "simple": { "limit": 20, "period": 60 } }],
+
+  "vars": {
+    // Free on Workers AI and not deprecated (checked 26 Nov 2026). Backup choice: "@cf/google/gemma-4-26b-a4b-it".
+    "MODEL": "@cf/zai-org/glm-4.7-flash",
+    "FACTS_URL": "https://dannellim.github.io/corchurchcamp2027presence/camp-facts.md",
+    "ALLOWED_ORIGINS": "https://dannellim.github.io",
+    "TURNSTILE_HOSTNAME": "dannellim.github.io"
+  },
+  // The Turnstile secret key is not stored here. Set it once with: npx wrangler secret put TURNSTILE_SECRET
+
+  // Errors and token counts in the Cloudflare dashboard (never the questions).
+  "observability": { "enabled": true }
+}

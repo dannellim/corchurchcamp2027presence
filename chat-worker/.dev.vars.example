@@ -1,0 +1,5 @@
+# For trying the chat on your own computer only. Copy this file to .dev.vars (which is never committed).
+# These are Cloudflare's public test keys: they always pass, and test passes report the hostname "example.com".
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+TURNSTILE_HOSTNAME=example.com
+ALLOWED_ORIGINS=http://localhost:8000

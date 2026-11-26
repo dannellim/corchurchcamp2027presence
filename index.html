@@ -197,6 +197,47 @@
   html:lang(zh) .verse p, html:lang(zh) .poi-head em { font-style: normal; }
   .nb { white-space: nowrap; } /* keeps a Chinese phrase on one line */
   .i18n-pending body { visibility: hidden; }
+
+  /* Camp chat helper (see chat-worker/README.md) */
+  .chat-fab { position: fixed; right: 20px; bottom: 20px; z-index: 20; display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; border: 0; border-radius: 999px; background: var(--coral-lt); color: var(--sea); font: 700 16px/1 var(--sans); box-shadow: 0 8px 24px rgba(14, 58, 68, .28); cursor: pointer; }
+  .chat-fab svg { width: 22px; height: 22px; flex: none; }
+  .chat-panel { position: fixed; right: 20px; bottom: 20px; z-index: 21; width: 380px; max-width: calc(100vw - 32px); height: min(600px, calc(100vh - 40px)); height: min(600px, calc(100dvh - 40px)); display: flex; flex-direction: column; background: var(--paper); border-radius: 18px; box-shadow: 0 16px 48px rgba(14, 58, 68, .32); overflow: hidden; }
+  .chat-fab[hidden], .chat-panel[hidden] { display: none; }
+  .chat-panel:focus { outline: none; }
+  .chat-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--sea); color: var(--paper); padding: 12px 12px 12px 20px; }
+  .chat-head h2 { font-size: 21px; margin: 0; }
+  .chat-close { flex: none; width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: var(--sand); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .chat-close:hover { background: rgba(242, 230, 211, .15); }
+  .chat-close svg { width: 22px; height: 22px; }
+  .chat-log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--foam); }
+  .msg { margin: 0; max-width: 88%; padding: 10px 14px; border-radius: 16px; font-size: 16px; line-height: 1.45; overflow-wrap: anywhere; white-space: pre-line; }
+  .msg.bot { align-self: flex-start; background: var(--paper); color: var(--sea); border-bottom-left-radius: 4px; }
+  .msg.me { align-self: flex-end; background: var(--sea); color: var(--paper); border-bottom-right-radius: 4px; }
+  .msg.err { border-left: 4px solid var(--coral); }
+  .msg a { color: var(--teal); font-weight: 700; }
+  .msg .go { display: inline-block; margin-top: 6px; }
+  .typing { display: flex; gap: 5px; padding: 16px 18px; }
+  .typing i { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); opacity: .35; animation: chat-dot 1.2s infinite; }
+  .typing i:nth-child(2) { animation-delay: .2s; }
+  .typing i:nth-child(3) { animation-delay: .4s; }
+  @keyframes chat-dot { 0%, 60%, 100% { opacity: .35; } 30% { opacity: 1; } }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button { border: 2px solid var(--teal); background: var(--paper); color: var(--teal); border-radius: 999px; padding: 8px 14px; font: 700 15px/1.2 var(--sans); cursor: pointer; }
+  .chips button:hover:not(:disabled) { background: var(--teal); color: var(--paper); }
+  .chat-form { display: flex; gap: 8px; padding: 12px 12px 8px; border-top: 1px solid var(--foam-line); background: var(--paper); }
+  .chat-form input { flex: 1; min-width: 0; border: 2px solid var(--foam-line); border-radius: 999px; padding: 10px 16px; font: 16px var(--sans); color: var(--sea); background: var(--paper); }
+  .chat-form input:focus { outline: none; border-color: var(--teal); }
+  .chat-form button { flex: none; width: 46px; height: 46px; border: 0; border-radius: 50%; background: var(--coral-lt); color: var(--sea); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .chat-form button svg { width: 22px; height: 22px; }
+  .chat-form button:disabled, .chips button:disabled { opacity: .5; cursor: default; }
+  .chat-ts { display: flex; justify-content: center; background: var(--paper); }
+  .chat-note { margin: 0; padding: 0 16px 12px; font-size: 13px; line-height: 1.4; color: var(--ink); background: var(--paper); text-align: center; }
+  .chat-fab:focus-visible, .chat-close:focus-visible, .chips button:focus-visible, .chat-form button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  @media (max-width: 600px) {
+    .chat-fab { right: 16px; bottom: 16px; }
+    .chat-panel { left: 16px; right: 16px; bottom: 16px; width: auto; max-width: none; height: min(600px, calc(100vh - 32px)); height: min(600px, calc(100dvh - 32px)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .typing i { animation: none; opacity: .7; } }
 </style>
 </head>
 <body>
@@ -395,6 +436,33 @@
 </section>
 <footer><span data-i18n="foot.camp">COR Church Camp 2027</span> · <a href="https://www.cor.org.sg" data-i18n="foot.church" data-i18n-href="foot.churchHref" target="_blank" rel="noopener">Chapel of the Resurrection</a> · <span data-i18n="foot.org">Organised by the El-Pizo cell group</span><br><span data-i18n="foot.photos">Hotel photos © Four Points by Sheraton Desaru (Marriott)</span></footer>
 
+<!-- Camp chat helper. Typed questions go to the chat Worker on Cloudflare; the four quick buttons are answered here, without the AI. See chat-worker/README.md. -->
+<button class="chat-fab" id="chat-open" type="button" aria-controls="chat-panel" aria-expanded="false" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span data-i18n="chat.open">Ask about camp</span>
+</button>
+<div class="chat-panel" id="chat-panel" role="dialog" aria-labelledby="chat-title" tabindex="-1" hidden>
+  <div class="chat-head">
+    <h2 id="chat-title" data-i18n="chat.title">Camp helper</h2>
+    <button class="chat-close" id="chat-close" type="button" aria-label="Close" data-i18n-aria-label="chat.close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="chat-log" id="chat-log" aria-live="polite">
+    <p class="msg bot" data-i18n="chat.hello">Hi! Ask me about COR Church Camp 2027, or tap a question below.</p>
+    <div class="chips" id="chat-chips">
+      <button type="button" data-faq="when" data-i18n="chat.qWhen">When is camp?</button>
+      <button type="button" data-faq="where" data-i18n="chat.qWhere">Where is it?</button>
+      <button type="button" data-faq="cost" data-i18n="chat.qCost">How much is it?</button>
+      <button type="button" data-faq="signup" data-i18n="chat.qSignup">How do I sign up?</button>
+    </div>
+  </div>
+  <form class="chat-form" id="chat-form">
+    <input id="chat-input" type="text" maxlength="300" autocomplete="off" enterkeyhint="send" placeholder="Type your question" data-i18n-placeholder="chat.placeholder" aria-label="Your question" data-i18n-aria-label="chat.inputLabel">
+    <button id="chat-send" type="submit" aria-label="Send" data-i18n-aria-label="chat.send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </form>
+  <div class="chat-ts" id="chat-ts"></div>
+  <p class="chat-note" data-i18n="chat.note">Answers may be wrong. Please check with the camp committee.</p>
+</div>
+
 <script>
 // Chinese labels. English lives in the HTML above; each element with data-i18n="key" (text) or
 // data-i18n-<attribute>="key" (alt, href, src, aria-label, content) gets the Chinese below when 中文 is chosen.
@@ -507,7 +575,20 @@
     "foot.church": "复活堂",
     "foot.churchHref": "https://www.cor.org.sg/chinese",
     "foot.org": "由 El-Pizo 小组筹办",
-    "foot.photos": "酒店图片 © 迪沙鲁福朋喜来登酒店（万豪）"
+    "foot.photos": "酒店图片 © 迪沙鲁福朋喜来登酒店（万豪）",
+
+    "chat.open": "营会问答",
+    "chat.title": "营会小助手",
+    "chat.close": "关闭",
+    "chat.hello": "你好！欢迎询问有关复活堂教会生活营 2027 的问题，或点选下面的问题。",
+    "chat.qWhen": "营会是什么时候？",
+    "chat.qWhere": "在哪里举行？",
+    "chat.qCost": "费用是多少？",
+    "chat.qSignup": "怎么报名？",
+    "chat.placeholder": "输入你的问题",
+    "chat.inputLabel": "你的问题",
+    "chat.send": "发送",
+    "chat.note": "回答可能有误，请向营会筹委会确认。"
   };
 
   var PREFIX = "data-i18n-";
@@ -552,6 +633,227 @@
   });
   apply(window.CAMP_LANG === "zh" ? "zh" : "en");
   document.documentElement.classList.remove("i18n-pending");
+})();
+</script>
+
+<script>
+// Camp chat helper. The four quick buttons are answered right here, without the AI.
+// Typed questions go to the chat Worker on Cloudflare (code in chat-worker/, see its README.md).
+(function () {
+  var LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  // The chat Worker's address and the Turnstile site key (public by design; the secret key is stored only in Cloudflare).
+  // If either is empty, the chat button stays hidden. On your own computer, Cloudflare's test key is used.
+  var CHAT_API = LOCAL ? "http://localhost:8787" : "https://cor-camp-chat.dannel-lim.workers.dev";
+  var TURNSTILE_SITEKEY = LOCAL ? "1x00000000000000000000BB" : "0x4AAAAAAGT2u0QIcZpT8TZg";
+  if (!CHAT_API || !TURNSTILE_SITEKEY) return;
+
+  // Quick-button answers. Keep these in line with camp-facts.md and the fixed replies in chat-worker/src/index.js.
+  var FAQ = {
+    when: {
+      en: "Camp is from Saturday 29 to Monday 31 May 2027 (3 days, 2 nights). Please keep these dates free!",
+      zh: "营会日期是2027年5月29日（周六）至31日（周一），三天两夜。请预留这几天的时间！"
+    },
+    where: {
+      en: "At Four Points by Sheraton Desaru, a 4-star hotel in Bandar Penawar, Johor, Malaysia. Address: Jalan Kempas 2, Taman Desaru Utama, 81930 Bandar Penawar, Johor, Malaysia.",
+      zh: "在马来西亚柔佛州的迪沙鲁福朋喜来登酒店（四星级）。地址：Jalan Kempas 2, Taman Desaru Utama, 81930 Bandar Penawar, Johor, Malaysia。",
+      link: { href: "#where", en: "Show directions", zh: "查看导航" }
+    },
+    cost: {
+      en: "Prices haven't been announced yet. We'll share them as soon as they're confirmed.",
+      zh: "营会费用尚未公布，确认后会尽快通知大家。"
+    },
+    signup: {
+      en: "Sign-up details haven't been announced yet. We'll share them as soon as they're confirmed.",
+      zh: "报名详情尚未公布，确认后会尽快通知大家。"
+    }
+  };
+  var ERRORS = {
+    slow_down: { en: "You're asking very quickly! Please wait a minute and try again.", zh: "提问太快了，请稍等一分钟再试。" },
+    too_long: { en: "Please keep your question under 300 characters.", zh: "问题请不要超过 300 个字。" },
+    verify_failed: { en: "We couldn't check that you're not a robot. Please try again.", zh: "未能完成人机验证，请再试一次。" },
+    daily_limit: { en: "The camp helper has reached today's limit. Please try again after 8am, or speak to the camp committee after service.", zh: "营会小助手今天的使用量已满，请在早上 8 点后再试，或在崇拜后询问营会筹委会。" },
+    other: { en: "Sorry, the camp helper isn't available right now. Please try again later.", zh: "抱歉，营会小助手暂时无法使用，请稍后再试。" }
+  };
+  function t(o) { return window.CAMP_LANG === "zh" ? o.zh : o.en; }
+
+  var fab = document.getElementById("chat-open");
+  var panel = document.getElementById("chat-panel");
+  var log = document.getElementById("chat-log");
+  var chips = document.getElementById("chat-chips");
+  var form = document.getElementById("chat-form");
+  var input = document.getElementById("chat-input");
+  var send = document.getElementById("chat-send");
+  var history = []; // the last 2 exchanges, sent with each typed question so follow-ups make sense
+  var busy = false;
+
+  // ---- Messages ----
+  var URL_RE = /(https?:\/\/[^\s<>"'，。）】]*[^\s<>"'，。）】.,!?;:])/;
+  function linkLabel(u) {
+    try {
+      var x = new URL(u), h = x.hostname.replace(/^www\./, "");
+      if (h === "maps.apple.com") return "Apple Maps";
+      if (h === "waze.com") return "Waze";
+      if (/google\./.test(h) && (h.indexOf("maps.") === 0 || x.pathname.indexOf("/maps") === 0)) return "Google Maps";
+      return h + (x.pathname.length > 1 ? x.pathname.replace(/\/$/, "") : "");
+    } catch (e) { return u; }
+  }
+  function addMsg(kind, text, link) {
+    var p = document.createElement("p");
+    p.className = "msg " + kind;
+    text.split(URL_RE).forEach(function (part, i) {
+      if (i % 2) {
+        var a = document.createElement("a");
+        a.href = part; a.target = "_blank"; a.rel = "noopener"; a.textContent = linkLabel(part);
+        p.appendChild(a);
+      } else if (part) {
+        p.appendChild(document.createTextNode(part));
+      }
+    });
+    if (link) {
+      var go = document.createElement("a");
+      go.className = "go"; go.href = link.href; go.textContent = t(link);
+      go.addEventListener("click", closeChat);
+      p.appendChild(document.createElement("br"));
+      p.appendChild(go);
+    }
+    log.appendChild(p);
+    log.scrollTop = log.scrollHeight;
+    return p;
+  }
+  function typing() {
+    var p = document.createElement("p");
+    p.className = "msg bot typing";
+    p.setAttribute("aria-hidden", "true");
+    p.innerHTML = "<i></i><i></i><i></i>";
+    log.appendChild(p);
+    log.scrollTop = log.scrollHeight;
+    return p;
+  }
+  function remember(q, a) {
+    history.push({ role: "user", content: q }, { role: "assistant", content: a });
+    history = history.slice(-4);
+  }
+  function setBusy(b) {
+    busy = b;
+    send.disabled = b;
+    log.setAttribute("aria-busy", String(b));
+    [].forEach.call(chips.querySelectorAll("button"), function (x) { x.disabled = b; });
+  }
+
+  // ---- "Not a robot" check (Cloudflare Turnstile), loaded only when the chat is opened ----
+  var ts = { loader: null, id: null, wait: null };
+  function loadTurnstile() {
+    if (!ts.loader) {
+      ts.loader = new Promise(function (resolve, reject) {
+        window.onCampTurnstile = resolve;
+        var s = document.createElement("script");
+        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onCampTurnstile";
+        s.async = true;
+        s.onerror = function () { ts.loader = null; reject(new Error("turnstile")); };
+        document.head.appendChild(s);
+      });
+    }
+    return ts.loader;
+  }
+  function settle(how, value) { var w = ts.wait; ts.wait = null; if (w) w[how](value); }
+  function runTurnstile() { // resolves with one fresh, single-use token
+    return loadTurnstile().then(function () {
+      return new Promise(function (resolve, reject) {
+        ts.wait = { resolve: resolve, reject: reject };
+        if (ts.id === null) {
+          ts.id = window.turnstile.render("#chat-ts", {
+            sitekey: TURNSTILE_SITEKEY,
+            execution: "execute",
+            appearance: "interaction-only",
+            language: window.CAMP_LANG === "zh" ? "zh-CN" : "en",
+            callback: function (token) { settle("resolve", token); },
+            "error-callback": function () { settle("reject", new Error("turnstile")); },
+            "timeout-callback": function () { settle("reject", new Error("turnstile")); }
+          });
+        } else {
+          window.turnstile.reset(ts.id);
+        }
+        window.turnstile.execute("#chat-ts");
+      });
+    });
+  }
+  var ready = null; // a token fetched in advance, so the answer comes back sooner
+  function prefetch() {
+    if (ready) return;
+    var r = { at: Date.now(), promise: runTurnstile() };
+    r.promise.catch(function () { if (ready === r) ready = null; });
+    ready = r;
+  }
+  function token() {
+    var r = ready;
+    ready = null;
+    if (r && Date.now() - r.at < 240000) return r.promise; // tokens last 5 minutes
+    return runTurnstile();
+  }
+
+  // ---- Asking ----
+  function askAI(q) {
+    addMsg("me", q);
+    setBusy(true);
+    var dots = typing();
+    var sent = history.slice();
+    function finish(kind, text) { dots.remove(); addMsg(kind, text); setBusy(false); prefetch(); }
+    token()
+      .then(function (tok) {
+        return fetch(CHAT_API + "/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: q, history: sent, token: tok })
+        }).then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (data) { return { ok: res.ok, data: data }; });
+        });
+      }, function () {
+        return { ok: false, data: { error: "verify_failed" } };
+      })
+      .then(function (r) {
+        if (r.ok && r.data.answer) { finish("bot", r.data.answer); remember(q, r.data.answer); }
+        else finish("bot err", t(ERRORS[r.data.error] || ERRORS.other));
+      }, function () {
+        finish("bot err", t(ERRORS.other));
+      });
+  }
+
+  chips.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-faq]");
+    if (!b || busy) return;
+    var f = FAQ[b.getAttribute("data-faq")];
+    var q = b.textContent, a = t(f);
+    addMsg("me", q);
+    addMsg("bot", a, f.link);
+    remember(q, a);
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var q = input.value.trim();
+    if (!q || busy) return;
+    if (q.length > 300) { addMsg("bot err", t(ERRORS.too_long)); return; }
+    input.value = "";
+    askAI(q);
+  });
+
+  // ---- Opening and closing ----
+  function openChat() {
+    panel.hidden = false;
+    fab.hidden = true;
+    fab.setAttribute("aria-expanded", "true");
+    if (window.matchMedia("(pointer: fine)").matches) input.focus(); else panel.focus();
+    prefetch();
+  }
+  function closeChat() {
+    panel.hidden = true;
+    fab.hidden = false;
+    fab.setAttribute("aria-expanded", "false");
+    fab.focus();
+  }
+  fab.addEventListener("click", openChat);
+  document.getElementById("chat-close").addEventListener("click", closeChat);
+  panel.addEventListener("keydown", function (e) { if (e.key === "Escape") closeChat(); });
+  fab.hidden = false;
 })();
 </script>
 
