@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>COR Church Camp 2027 · Presence · Save the Date</title>
-<meta name="description" content="Save the date! COR Church Camp 2027 by Chapel of the Resurrection, Saturday 29 – Monday 31 May 2027 at Four Points by Sheraton Desaru, Johor, Malaysia.">
+<title data-i18n="meta.title">COR Church Camp 2027 · Presence · Save the Date</title>
+<meta name="description" data-i18n-content="meta.desc" content="Save the date! COR Church Camp 2027 by Chapel of the Resurrection, Saturday 29 – Monday 31 May 2027 at Four Points by Sheraton Desaru, Johor, Malaysia.">
 <meta name="theme-color" content="#0E3A44">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Save the Date · COR Church Camp 2027">
@@ -16,6 +16,20 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="alternate" hreflang="en" href="https://dannellim.github.io/corchurchcamp2027presence/en/">
+<link rel="alternate" hreflang="zh-Hans" href="https://dannellim.github.io/corchurchcamp2027presence/zh/">
+<script>
+  // Pick the language before the page paints: ?lang=zh / ?lang=en, otherwise the phone's language.
+  (function () {
+    var q = new URLSearchParams(location.search).get("lang");
+    var nav = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+    window.CAMP_LANG = q === "zh" || q === "en" ? q : /^zh/i.test(nav) ? "zh" : "en";
+    if (window.CAMP_LANG === "zh") {
+      document.documentElement.classList.add("i18n-pending");
+      setTimeout(function () { document.documentElement.classList.remove("i18n-pending"); }, 2000);
+    }
+  })();
+</script>
 <style>
   :root {
     --sea: #0E3A44; --teal: #1E7A7A; --foam: #E6F2EF; --foam-line: #CFE3DE;
@@ -60,7 +74,7 @@
   .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .wave { display: block; width: 100%; height: 90px; }
   @media (max-width: 820px) {
-    .hero { padding-top: 40px; }
+    .hero { padding-top: 64px; }
     .hero-grid { grid-template-columns: 1fr; gap: 24px; }
     .hero-logo { order: -1; }
     .hero-logo img { max-width: 240px; }
@@ -167,33 +181,50 @@
   .closing .share strong { display: block; color: var(--sea); font-size: 19px; margin-bottom: 2px; }
   footer { background: var(--sea); color: var(--sand); font-size: 14px; text-align: center; padding: 8px 16px 28px; }
   footer a { color: var(--sand); }
+
+  /* Language switch */
+  .lang-switch { position: absolute; top: 18px; right: 24px; z-index: 2; display: flex; gap: 4px; padding: 4px; border: 1px solid rgba(242, 230, 211, .4); border-radius: 999px; }
+  .lang-switch a { color: var(--sand); text-decoration: none; font-weight: 700; font-size: 14px; line-height: 1; padding: 8px 14px; border-radius: 999px; }
+  .lang-switch a[aria-current="true"] { background: var(--sand); color: var(--sea); }
+  .lang-switch a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  @media (max-width: 600px) { .lang-switch { top: 14px; right: 16px; } }
+
+  /* Chinese: same design, Chinese system fonts (lining serif digits for dates), no faux italics */
+  html:lang(zh) {
+    --serif: "Times New Roman", Times, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", "Segoe UI", Arial, sans-serif;
+  }
+  html:lang(zh) .verse p, html:lang(zh) .poi-head em { font-style: normal; }
+  .nb { white-space: nowrap; } /* keeps a Chinese phrase on one line */
+  .i18n-pending body { visibility: hidden; }
 </style>
 </head>
 <body>
 
 <header class="hero">
+  <nav class="lang-switch" aria-label="Language 语言"><a href="?lang=en" data-lang="en" lang="en">English</a><a href="?lang=zh" data-lang="zh" lang="zh-Hans">中文</a></nav>
   <div class="wrap hero-grid">
     <div>
-      <p class="eyebrow">Chapel of the Resurrection</p>
-      <h1>Save the Date</h1>
-      <p class="camp">COR Church Camp 2027</p>
+      <p class="eyebrow" data-i18n="hero.church">Chapel of the Resurrection</p>
+      <h1 data-i18n="hero.title">Save the Date</h1>
+      <p class="camp" data-i18n="hero.camp">COR Church Camp 2027</p>
       <ul class="facts">
         <li>
           <svg viewBox="0 0 24 24" fill="none" stroke="#F08A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          <div><strong>Sat 29 – Mon 31 May 2027</strong><span>3 days, 2 nights</span></div>
+          <div><strong data-i18n="hero.dates">Sat 29 – Mon 31 May 2027</strong><span data-i18n="hero.length">3 days, 2 nights</span></div>
         </li>
         <li>
           <svg viewBox="0 0 24 24" fill="none" stroke="#F08A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div><strong>Four Points by Sheraton Desaru</strong><span>4-star hotel · Bandar Penawar, Johor, Malaysia</span></div>
+          <div><strong data-i18n="hero.hotel">Four Points by Sheraton Desaru</strong><span data-i18n="hero.hotelSub">4-star hotel · Bandar Penawar, Johor, Malaysia</span></div>
         </li>
       </ul>
       <div class="buttons">
-        <a class="btn btn-coral" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=COR%20Church%20Camp%202027&amp;dates=20270529/20270601&amp;location=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar%2C%20Johor%2C%20Malaysia&amp;details=Save%20the%20date!%20https%3A%2F%2Fdannellim.github.io%2Fcorchurchcamp2027presence%2F" target="_blank" rel="noopener">Add to Google Calendar</a>
-        <a class="btn btn-ghost" href="assets/cor-church-camp-2027.ics" download>Apple / Outlook calendar</a>
+        <a class="btn btn-coral" data-i18n="btn.gcal" data-i18n-href="btn.gcalHref" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=COR%20Church%20Camp%202027&amp;dates=20270529/20270601&amp;location=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar%2C%20Johor%2C%20Malaysia&amp;details=Save%20the%20date!%20https%3A%2F%2Fdannellim.github.io%2Fcorchurchcamp2027presence%2F" target="_blank" rel="noopener">Add to Google Calendar</a>
+        <a class="btn btn-ghost" data-i18n="btn.ics" data-i18n-href="btn.icsHref" href="assets/cor-church-camp-2027.ics" download>Apple / Outlook calendar</a>
       </div>
     </div>
     <div class="hero-logo">
-      <img src="assets/logo.svg" alt="COR Church Camp 2027 badge: a cross rising from the sea in front of a sunrise, with the words Presence, Desaru Malaysia and 29–31 May 2027" width="420" height="420">
+      <img src="assets/logo.svg" data-i18n-alt="hero.logoAlt" alt="COR Church Camp 2027 badge: a cross rising from the sea in front of a sunrise, with the words Presence, Desaru Malaysia and 29–31 May 2027" width="420" height="420">
     </div>
   </div>
   <svg class="wave" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
@@ -207,25 +238,25 @@
   <section id="theme">
     <div class="wrap theme-grid">
       <div>
-        <p class="eyebrow">Our camp theme</p>
-        <h2>Presence</h2>
-        <p class="lead">Wherever our journey takes us, we remember the One who journeys with us.</p>
+        <p class="eyebrow" data-i18n="theme.eyebrow">Our camp theme</p>
+        <h2 data-i18n="theme.title">Presence</h2>
+        <p class="lead" data-i18n="theme.lead">Wherever our journey takes us, we remember the One who journeys with us.</p>
         <blockquote class="verse">
-          <p>“My Presence will go with you, and I will give you rest.”</p>
-          <cite>Exodus 33:14 (NIV)</cite>
+          <p data-i18n="theme.verse">“My Presence will go with you, and I will give you rest.”</p>
+          <cite data-i18n="theme.ref">Exodus 33:14 (NIV)</cite>
         </blockquote>
         <div class="pillars">
           <div class="pillar">
-            <h3><svg viewBox="0 0 24 24" fill="none" stroke="#F2E6D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/></svg>Faith</h3>
-            <p>Trusting the God who goes with us</p>
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="#F2E6D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/></svg><span data-i18n="theme.faith">Faith</span></h3>
+            <p data-i18n="theme.faithText">Trusting the God who goes with us</p>
           </div>
           <div class="pillar">
-            <h3><svg viewBox="0 0 24 24" fill="none" stroke="#F2E6D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Love</h3>
-            <p>Reflecting His presence to one another</p>
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="#F2E6D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg><span data-i18n="theme.love">Love</span></h3>
+            <p data-i18n="theme.loveText">Reflecting His presence to one another</p>
           </div>
           <div class="pillar">
-            <h3><svg viewBox="0 0 24 24" fill="none" stroke="#F2E6D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Community</h3>
-            <p>Gathering in His presence as one family</p>
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="#F2E6D3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span data-i18n="theme.community">Community</span></h3>
+            <p data-i18n="theme.communityText">Gathering in His presence as one family</p>
           </div>
         </div>
       </div>
@@ -235,25 +266,25 @@
 
   <section id="when" class="alt">
     <div class="wrap">
-      <p class="eyebrow">When</p>
-      <h2>Saturday 29 – Monday 31 May 2027</h2>
+      <p class="eyebrow" data-i18n="when.eyebrow">When</p>
+      <h2 data-i18n="when.title">Saturday 29 – Monday 31 May 2027</h2>
       <div class="when-grid">
         <div>
           <div class="stats">
-            <div class="stat"><b>3</b><span>DAYS</span></div>
-            <div class="stat"><b>2</b><span>NIGHTS</span></div>
+            <div class="stat"><b>3</b><span data-i18n="when.days">DAYS</span></div>
+            <div class="stat"><b>2</b><span data-i18n="when.nights">NIGHTS</span></div>
           </div>
           <ul class="days">
-            <li><small>DAY 1</small><strong>Saturday, 29 May 2027</strong></li>
-            <li><small>DAY 2</small><strong>Sunday, 30 May 2027</strong></li>
-            <li><small>DAY 3</small><strong>Monday, 31 May 2027</strong></li>
+            <li><small data-i18n="when.day1">DAY 1</small><strong data-i18n="when.day1Date">Saturday, 29 May 2027</strong></li>
+            <li><small data-i18n="when.day2">DAY 2</small><strong data-i18n="when.day2Date">Sunday, 30 May 2027</strong></li>
+            <li><small data-i18n="when.day3">DAY 3</small><strong data-i18n="when.day3Date">Monday, 31 May 2027</strong></li>
           </ul>
-          <p class="note">Please keep these dates free!</p>
+          <p class="note" data-i18n="when.note">Please keep these dates free!</p>
         </div>
         <div class="cal" style="background:#FFFFFF">
-          <div class="cal-head"><h3>May 2027</h3><span class="legend"><i></i>Camp dates</span></div>
-          <div class="grid7" role="table" aria-label="Calendar for May 2027 with 29, 30 and 31 May marked as camp dates">
-            <span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span>
+          <div class="cal-head"><h3 data-i18n="cal.month">May 2027</h3><span class="legend"><i></i><span data-i18n="cal.legend">Camp dates</span></span></div>
+          <div class="grid7" role="table" data-i18n-aria-label="cal.aria" aria-label="Calendar for May 2027 with 29, 30 and 31 May marked as camp dates">
+            <span class="dow" data-i18n="cal.sun">S</span><span class="dow" data-i18n="cal.mon">M</span><span class="dow" data-i18n="cal.tue">T</span><span class="dow" data-i18n="cal.wed">W</span><span class="dow" data-i18n="cal.thu">T</span><span class="dow" data-i18n="cal.fri">F</span><span class="dow" data-i18n="cal.sat">S</span>
             <span></span><span></span><span></span><span></span><span></span><span></span><span>1</span>
             <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
             <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
@@ -268,38 +299,38 @@
 
   <section id="where">
     <div class="wrap">
-      <p class="eyebrow">Where</p>
-      <h2>Four Points by Sheraton Desaru</h2>
+      <p class="eyebrow" data-i18n="where.eyebrow">Where</p>
+      <h2 data-i18n="where.title">Four Points by Sheraton Desaru</h2>
       <div class="stars">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2B544" d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z"/></svg>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2B544" d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z"/></svg>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2B544" d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z"/></svg>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2B544" d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z"/></svg>
-        4-star hotel
+        <span data-i18n="where.stars">4-star hotel</span>
       </div>
       <div class="where-grid">
         <div>
-          <p class="label">ADDRESS</p>
+          <p class="label" data-i18n="where.address">ADDRESS</p>
           <address>Jalan Kempas 2, Taman Desaru Utama<br>81930 Bandar Penawar<br>Johor, Malaysia</address>
-          <p class="label">GET DIRECTIONS</p>
-          <p class="qr-hint">Scan with your phone camera, or tap to open.</p>
+          <p class="label" data-i18n="where.directions">GET DIRECTIONS</p>
+          <p class="qr-hint" data-i18n="where.hint">Scan with your phone camera, or tap to open.</p>
           <div class="qrs">
-            <a class="qr" href="https://www.google.com/maps/dir/?api=1&amp;destination=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar" target="_blank" rel="noopener"><img src="assets/qr-google.svg" alt="QR code for directions in Google Maps" width="132" height="132">Google Maps</a>
-            <a class="qr" href="https://maps.apple.com/?daddr=1.5762856,104.2062895&amp;dirflg=d" target="_blank" rel="noopener"><img src="assets/qr-apple.svg" alt="QR code for directions in Apple Maps" width="132" height="132">Apple Maps</a>
-            <a class="qr" href="https://waze.com/ul?ll=1.5762856,104.2062895&amp;navigate=yes" target="_blank" rel="noopener"><img src="assets/qr-waze.svg" alt="QR code for directions in Waze" width="132" height="132">Waze</a>
+            <a class="qr" href="https://www.google.com/maps/dir/?api=1&amp;destination=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar" target="_blank" rel="noopener"><img src="assets/qr-google.svg" alt="QR code for directions in Google Maps" data-i18n-alt="where.qrGoogle" width="132" height="132"><span data-i18n="where.google">Google Maps</span></a>
+            <a class="qr" href="https://maps.apple.com/?daddr=1.5762856,104.2062895&amp;dirflg=d" target="_blank" rel="noopener"><img src="assets/qr-apple.svg" alt="QR code for directions in Apple Maps" data-i18n-alt="where.qrApple" width="132" height="132"><span data-i18n="where.apple">Apple Maps</span></a>
+            <a class="qr" href="https://waze.com/ul?ll=1.5762856,104.2062895&amp;navigate=yes" target="_blank" rel="noopener"><img src="assets/qr-waze.svg" alt="QR code for directions in Waze" data-i18n-alt="where.qrWaze" width="132" height="132">Waze</a>
           </div>
           <div class="rating">
             <b>4.4</b>
-            <p>out of 5 on Google, from 1,171 reviews (Nov 2026).<br><a href="https://www.google.com/maps/search/?api=1&amp;query=Four%20Points%20by%20Sheraton%20Desaru" target="_blank" rel="noopener">Read the reviews on Google Maps</a></p>
+            <p><span data-i18n="where.rating">out of 5 on Google, from 1,171 reviews (Nov 2026).</span><br><a data-i18n="where.reviews" href="https://www.google.com/maps/search/?api=1&amp;query=Four%20Points%20by%20Sheraton%20Desaru" target="_blank" rel="noopener">Read the reviews on Google Maps</a></p>
           </div>
         </div>
         <div>
           <div class="photos">
-            <img class="big" src="assets/hotel.jpg" alt="Four Points by Sheraton Desaru at dusk: the lit hotel tower above the entrance" loading="lazy">
-            <img class="small" src="assets/pool.jpg" alt="The hotel’s outdoor swimming pool on a sunny day" loading="lazy">
-            <img class="small" src="assets/room.jpg" alt="Deluxe guest room with two beds and a balcony window" loading="lazy">
+            <img class="big" src="assets/hotel.jpg" data-i18n-alt="where.photoHotel" alt="Four Points by Sheraton Desaru at dusk: the lit hotel tower above the entrance" loading="lazy">
+            <img class="small" src="assets/pool.jpg" data-i18n-alt="where.photoPool" alt="The hotel’s outdoor swimming pool on a sunny day" loading="lazy">
+            <img class="small" src="assets/room.jpg" data-i18n-alt="where.photoRoom" alt="Deluxe guest room with two beds and a balcony window" loading="lazy">
           </div>
-          <p class="credit">Photos: Four Points by Sheraton Desaru (Marriott)</p>
+          <p class="credit" data-i18n="where.credit">Photos: Four Points by Sheraton Desaru (Marriott)</p>
         </div>
       </div>
     </div>
@@ -307,18 +338,18 @@
 
   <section id="nearby" class="alt">
     <div class="wrap">
-      <p class="eyebrow">Around the hotel</p>
-      <h2>Food &amp; shopping nearby</h2>
-      <div class="poi-head"><p class="label">FOOD</p><em>Distances are approximate, from the hotel</em></div>
+      <p class="eyebrow" data-i18n="near.eyebrow">Around the hotel</p>
+      <h2 data-i18n="near.title">Food &amp; shopping nearby</h2>
+      <div class="poi-head"><p class="label" data-i18n="near.food">FOOD</p><em data-i18n="near.note">Distances are approximate, from the hotel</em></div>
       <div class="cards">
-        <a class="card" href="https://maps.google.com/?cid=3858801015707905229" target="_blank" rel="noopener"><h3>The Mesh Restaurant</h3><p>All-day dining with Malaysian flavours</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>In the hotel</p><span class="more">Reviews on Google Maps →</span></a>
-        <a class="card" href="https://maps.google.com/?cid=15894267433109811746" target="_blank" rel="noopener"><h3>Kedai Kopi Otai</h3><p>Local kopitiam for breakfast &amp; kopi</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>≈ 2 min walk</p><span class="more">Reviews on Google Maps →</span></a>
-        <a class="card" href="https://www.google.com/maps/search/restaurants/@1.5762856,104.2062895,17z" target="_blank" rel="noopener"><h3>More local eateries</h3><p>Thai, Vietnamese &amp; ayam penyet</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>6–9 min walk</p><span class="more">Browse on Google Maps →</span></a>
+        <a class="card" href="https://maps.google.com/?cid=3858801015707905229" target="_blank" rel="noopener"><h3>The Mesh Restaurant</h3><p data-i18n="near.meshText">All-day dining with Malaysian flavours</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="near.meshDist">In the hotel</span></p><span class="more" data-i18n="near.reviews">Reviews on Google Maps →</span></a>
+        <a class="card" href="https://maps.google.com/?cid=15894267433109811746" target="_blank" rel="noopener"><h3>Kedai Kopi Otai</h3><p data-i18n="near.otaiText">Local kopitiam for breakfast &amp; kopi</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="near.otaiDist">≈ 2 min walk</span></p><span class="more" data-i18n="near.reviews">Reviews on Google Maps →</span></a>
+        <a class="card" href="https://www.google.com/maps/search/restaurants/@1.5762856,104.2062895,17z" target="_blank" rel="noopener"><h3 data-i18n="near.more">More local eateries</h3><p data-i18n="near.moreText">Thai, Vietnamese &amp; ayam penyet</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="near.moreDist">6–9 min walk</span></p><span class="more" data-i18n="near.browse">Browse on Google Maps →</span></a>
       </div>
-      <div class="poi-head"><p class="label">SHOPPING</p></div>
+      <div class="poi-head"><p class="label" data-i18n="near.shopping">SHOPPING</p></div>
       <div class="cards two">
-        <a class="card" href="https://maps.google.com/?cid=5248542970612041478" target="_blank" rel="noopener"><h3>SKS City Mall</h3><p>Food court, wet market, Desaru Kopitiam, Watsons &amp; MR DIY</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Short walk from the hotel</p><span class="more">Reviews on Google Maps →</span></a>
-        <a class="card" href="https://www.google.com/maps/search/supermarkets/@1.5762856,104.2062895,16z" target="_blank" rel="noopener"><h3>Bandar Penawar town</h3><p>Supermarkets &amp; convenience stores for snacks and essentials</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Around the hotel</p><span class="more">Browse on Google Maps →</span></a>
+        <a class="card" href="https://maps.google.com/?cid=5248542970612041478" target="_blank" rel="noopener"><h3>SKS City Mall</h3><p data-i18n="near.sksText">Food court, wet market, Desaru Kopitiam, Watsons &amp; MR DIY</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="near.sksDist">Short walk from the hotel</span></p><span class="more" data-i18n="near.reviews">Reviews on Google Maps →</span></a>
+        <a class="card" href="https://www.google.com/maps/search/supermarkets/@1.5762856,104.2062895,16z" target="_blank" rel="noopener"><h3 data-i18n="near.town">Bandar Penawar town</h3><p data-i18n="near.townText">Supermarkets &amp; convenience stores for snacks and essentials</p><p class="dist"><svg viewBox="0 0 24 24" fill="none" stroke="#1E7A7A" stroke-width="2.5" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="near.townDist">Around the hotel</span></p><span class="more" data-i18n="near.browse">Browse on Google Maps →</span></a>
       </div>
     </div>
   </section>
@@ -326,34 +357,34 @@
   <section id="committee">
     <div class="wrap committee-grid">
       <div>
-        <p class="eyebrow">Camp committee</p>
-        <h2>Your camp committee</h2>
-        <p class="group">Organised by the <strong>El-Pizo</strong> cell group</p>
-        <h3>Questions about camp?</h3>
-        <p class="lead">Speak to any of us after service. We’d love to hear from you!</p>
+        <p class="eyebrow" data-i18n="com.eyebrow">Camp committee</p>
+        <h2 data-i18n="com.title">Your camp committee</h2>
+        <p class="group" data-i18n="com.group">Organised by the <strong>El-Pizo</strong> cell group</p>
+        <h3 data-i18n="com.question">Questions about camp?</h3>
+        <p class="lead" data-i18n="com.text">Speak to any of us after service. We’d love to hear from you!</p>
       </div>
       <div class="committee-photo">
-        <img src="assets/committee.jpg" alt="The camp committee from the El-Pizo cell group: ten smiling members taking a group selfie on a boat between forested limestone cliffs" loading="lazy">
+        <img src="assets/committee.jpg" data-i18n-alt="com.photo" alt="The camp committee from the El-Pizo cell group: ten smiling members taking a group selfie on a boat between forested limestone cliffs" loading="lazy">
       </div>
     </div>
   </section>
 </main>
 
-<section class="closing" aria-label="See you in Desaru">
+<section class="closing" data-i18n-aria-label="close.aria" aria-label="See you in Desaru">
   <div class="wrap">
     <img src="assets/logo.svg" alt="" width="170" height="170">
-    <p class="eyebrow">Save the date</p>
-    <h2>See you in Desaru!</h2>
-    <p class="when">Sat 29 – Mon 31 May 2027</p>
-    <p class="venue">Four Points by Sheraton Desaru · Johor, Malaysia</p>
-    <p class="soon">Prices and sign-up details will be announced soon.</p>
+    <p class="eyebrow" data-i18n="close.eyebrow">Save the date</p>
+    <h2 data-i18n="close.title">See you in Desaru!</h2>
+    <p class="when" data-i18n="close.when">Sat 29 – Mon 31 May 2027</p>
+    <p class="venue" data-i18n="close.venue">Four Points by Sheraton Desaru · Johor, Malaysia</p>
+    <p class="soon" data-i18n="close.soon">Prices and sign-up details will be announced soon.</p>
     <div class="buttons">
-      <a class="btn btn-coral" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=COR%20Church%20Camp%202027&amp;dates=20270529/20270601&amp;location=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar%2C%20Johor%2C%20Malaysia&amp;details=Save%20the%20date!%20https%3A%2F%2Fdannellim.github.io%2Fcorchurchcamp2027presence%2F" target="_blank" rel="noopener">Add to Google Calendar</a>
-      <a class="btn btn-ghost" href="assets/cor-church-camp-2027.ics" download>Apple / Outlook calendar</a>
+      <a class="btn btn-coral" data-i18n="btn.gcal" data-i18n-href="btn.gcalHref" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=COR%20Church%20Camp%202027&amp;dates=20270529/20270601&amp;location=Four%20Points%20by%20Sheraton%20Desaru%2C%20Bandar%20Penawar%2C%20Johor%2C%20Malaysia&amp;details=Save%20the%20date!%20https%3A%2F%2Fdannellim.github.io%2Fcorchurchcamp2027presence%2F" target="_blank" rel="noopener">Add to Google Calendar</a>
+      <a class="btn btn-ghost" data-i18n="btn.ics" data-i18n-href="btn.icsHref" href="assets/cor-church-camp-2027.ics" download>Apple / Outlook calendar</a>
     </div>
     <div class="share">
-      <img src="assets/qr-website.svg" alt="QR code that opens this website" width="112" height="112">
-      <p><strong>Share this page</strong>Scan with your phone camera to open this website.</p>
+      <img src="assets/qr-website-en.svg" data-i18n-src="close.qrSrc" alt="QR code that opens this website" data-i18n-alt="close.qrAlt" width="112" height="112">
+      <p data-i18n="close.share"><strong>Share this page</strong>Scan with your phone camera to open this website.</p>
     </div>
   </div>
   <svg class="wave" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
@@ -362,7 +393,167 @@
     <path d="M0 84 C 160 72, 330 96, 500 84 S 840 72, 1000 84 V100 H0 Z" fill="#F2E6D3" opacity="0.9"/>
   </svg>
 </section>
-<footer>COR Church Camp 2027 · <a href="https://www.cor.org.sg" target="_blank" rel="noopener">Chapel of the Resurrection</a> · Organised by the El-Pizo cell group<br>Hotel photos © Four Points by Sheraton Desaru (Marriott)</footer>
+<footer><span data-i18n="foot.camp">COR Church Camp 2027</span> · <a href="https://www.cor.org.sg" data-i18n="foot.church" data-i18n-href="foot.churchHref" target="_blank" rel="noopener">Chapel of the Resurrection</a> · <span data-i18n="foot.org">Organised by the El-Pizo cell group</span><br><span data-i18n="foot.photos">Hotel photos © Four Points by Sheraton Desaru (Marriott)</span></footer>
+
+<script>
+// Chinese labels. English lives in the HTML above; each element with data-i18n="key" (text) or
+// data-i18n-<attribute>="key" (alt, href, src, aria-label, content) gets the Chinese below when 中文 is chosen.
+// To change a Chinese label, edit it here. A missing key simply shows the English.
+(function () {
+  var SITE = "https://dannellim.github.io/corchurchcamp2027presence/";
+  var ZH = {
+    "meta.title": "复活堂教会生活营 2027 · 同在 · 敬请预留日期",
+    "meta.desc": "敬请预留日期！复活堂教会生活营 2027，2027年5月29日（周六）至31日（周一），马来西亚柔佛州迪沙鲁福朋喜来登酒店。",
+
+    "hero.church": "复活堂",
+    "hero.title": "敬请预留日期",
+    "hero.camp": "复活堂教会生活营 2027",
+    "hero.dates": "2027年5月29–31日",
+    "hero.length": "周六至周一 · 三天两夜",
+    "hero.hotel": "迪沙鲁福朋喜来登酒店",
+    "hero.hotelSub": "四星级酒店 · 马来西亚柔佛州 Bandar&nbsp;Penawar",
+    "hero.logoAlt": "复活堂教会生活营 2027 徽标：十字架从海面升起，背后是日出，写有 Presence、Desaru Malaysia 和 29–31 May 2027",
+    "btn.gcal": "加入 Google 日历",
+    "btn.gcalHref": "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("复活堂教会生活营 2027") +
+      "&dates=20270529/20270601&location=" + encodeURIComponent("Four Points by Sheraton Desaru, Bandar Penawar, Johor, Malaysia") +
+      "&details=" + encodeURIComponent("敬请预留日期！" + SITE + "zh/"),
+    "btn.ics": "Apple / Outlook 日历",
+    "btn.icsHref": "assets/cor-church-camp-2027-zh.ics",
+
+    "theme.eyebrow": "营会主题",
+    "theme.title": "同在 Presence",
+    "theme.lead": "<span class=\"nb\">无论旅程带我们到哪里，</span><span class=\"nb\">我们都记得那位与我们同行的主。</span>",
+    "theme.verse": "<span class=\"nb\">“我必亲自和你同去，</span><span class=\"nb\">使你得安息。”</span>",
+    "theme.ref": "出埃及记 33:14（和合本）",
+    "theme.faith": "信心",
+    "theme.faithText": "信靠与我们同行的神",
+    "theme.love": "爱心",
+    "theme.loveText": "彼此彰显祂的同在",
+    "theme.community": "团契",
+    "theme.communityText": "一家人同聚在主面前",
+
+    "when.eyebrow": "日期",
+    "when.title": "2027年5月29日（周六）至31日（周一）",
+    "when.days": "天",
+    "when.nights": "晚",
+    "when.day1": "第一天",
+    "when.day1Date": "5月29日（星期六）",
+    "when.day2": "第二天",
+    "when.day2Date": "5月30日（星期日）",
+    "when.day3": "第三天",
+    "when.day3Date": "5月31日（星期一）",
+    "when.note": "请预留这几天的时间！",
+    "cal.month": "2027年5月",
+    "cal.legend": "营会日期",
+    "cal.aria": "2027年5月日历，5月29日、30日和31日为营会日期",
+    "cal.sun": "日", "cal.mon": "一", "cal.tue": "二", "cal.wed": "三", "cal.thu": "四", "cal.fri": "五", "cal.sat": "六",
+
+    "where.eyebrow": "地点 · Four Points by Sheraton&nbsp;Desaru",
+    "where.title": "迪沙鲁福朋喜来登酒店",
+    "where.stars": "四星级酒店",
+    "where.address": "地址",
+    "where.directions": "导航",
+    "where.hint": "用手机相机扫码，或直接点击打开。",
+    "where.google": "Google 地图",
+    "where.apple": "Apple 地图",
+    "where.qrGoogle": "Google 地图导航二维码",
+    "where.qrApple": "Apple 地图导航二维码",
+    "where.qrWaze": "Waze 导航二维码",
+    "where.rating": "Google 评分（满分 5 分）<br>1,171 条评价 · 2026年11月",
+    "where.reviews": "在 Google 地图查看评价",
+    "where.photoHotel": "迪沙鲁福朋喜来登酒店夜景：灯火通明的酒店大楼与入口",
+    "where.photoPool": "阳光下的酒店户外泳池",
+    "where.photoRoom": "豪华双床客房，带阳台窗户",
+    "where.credit": "图片：迪沙鲁福朋喜来登酒店（万豪）",
+
+    "near.eyebrow": "酒店周边",
+    "near.title": "附近美食与购物",
+    "near.food": "美食",
+    "near.note": "距离从酒店起算，仅供参考",
+    "near.meshText": "全日餐厅，马来西亚风味",
+    "near.meshDist": "酒店内",
+    "near.otaiText": "本地咖啡店，早餐和咖啡",
+    "near.otaiDist": "步行约 2 分钟",
+    "near.more": "更多本地餐馆",
+    "near.moreText": "泰国菜、越南菜和印尼炸鸡",
+    "near.moreDist": "步行 6–9 分钟",
+    "near.shopping": "购物",
+    "near.sksText": "<span class=\"nb\">美食广场、菜市场、</span><span class=\"nb\">Desaru Kopitiam、</span><span class=\"nb\">屈臣氏和 MR DIY</span>",
+    "near.sksDist": "从酒店步行即达",
+    "near.town": "Bandar Penawar 市区",
+    "near.townText": "超市和便利店，可买零食和日用品",
+    "near.townDist": "酒店周边",
+    "near.reviews": "Google 地图评价 →",
+    "near.browse": "在 Google 地图浏览 →",
+
+    "com.eyebrow": "筹委会",
+    "com.title": "营会筹委会",
+    "com.group": "由 <strong>El-Pizo</strong> 小组筹办",
+    "com.question": "对营会有疑问吗？",
+    "com.text": "<span class=\"nb\">崇拜后欢迎随时找我们，</span><span class=\"nb\">我们很乐意为你解答！</span>",
+    "com.photo": "来自 El-Pizo 小组的营会筹委会：十位笑容满面的成员在两旁是石灰岩峭壁的河上乘船自拍",
+
+    "close.aria": "迪沙鲁见",
+    "close.eyebrow": "敬请预留日期",
+    "close.title": "迪沙鲁见！",
+    "close.when": "2027年5月29–31日（周六至周一）",
+    "close.venue": "迪沙鲁福朋喜来登酒店 · 马来西亚柔佛州",
+    "close.soon": "营会费用和报名详情将很快公布。",
+    "close.qrSrc": "assets/qr-website-zh.svg",
+    "close.qrAlt": "打开本网站的二维码",
+    "close.share": "<strong>分享此页</strong><span class=\"nb\">用手机相机扫码，</span><span class=\"nb\">即可打开本网站。</span>",
+
+    "foot.camp": "复活堂教会生活营 2027",
+    "foot.church": "复活堂",
+    "foot.churchHref": "https://www.cor.org.sg/chinese",
+    "foot.org": "由 El-Pizo 小组筹办",
+    "foot.photos": "酒店图片 © 迪沙鲁福朋喜来登酒店（万豪）"
+  };
+
+  var PREFIX = "data-i18n-";
+  var nodes = [].slice.call(document.querySelectorAll("*")).filter(function (el) {
+    return [].some.call(el.attributes, function (a) { return a.name.indexOf("data-i18n") === 0; });
+  });
+  nodes.forEach(function (el) { // remember the English that is written in the HTML
+    el._en = { html: el.innerHTML, attrs: {} };
+    [].forEach.call(el.attributes, function (a) {
+      if (a.name.indexOf(PREFIX) === 0) { var attr = a.name.slice(PREFIX.length); el._en.attrs[attr] = el.getAttribute(attr); }
+    });
+  });
+  var missing = [];
+  function pick(key, english) {
+    if (window.CAMP_LANG !== "zh") return english;
+    if (ZH[key] == null) { missing.push(key); return english; }
+    return ZH[key];
+  }
+  function apply(lang) {
+    window.CAMP_LANG = lang;
+    missing = [];
+    document.documentElement.lang = lang === "zh" ? "zh-Hans" : "en";
+    nodes.forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      if (key) el.innerHTML = pick(key, el._en.html);
+      Object.keys(el._en.attrs).forEach(function (attr) {
+        el.setAttribute(attr, pick(el.getAttribute(PREFIX + attr), el._en.attrs[attr]));
+      });
+    });
+    document.querySelectorAll(".lang-switch a").forEach(function (a) {
+      a.setAttribute("aria-current", String(a.getAttribute("data-lang") === lang));
+    });
+    window.CAMP_I18N_MISSING = missing;
+  }
+  document.querySelectorAll(".lang-switch a").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      var lang = a.getAttribute("data-lang");
+      apply(lang);
+      history.replaceState(null, "", "?lang=" + lang + location.hash);
+    });
+  });
+  apply(window.CAMP_LANG === "zh" ? "zh" : "en");
+  document.documentElement.classList.remove("i18n-pending");
+})();
+</script>
 
 </body>
 </html>

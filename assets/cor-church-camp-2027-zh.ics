@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Chapel of the Resurrection//COR Church Camp 2027//ZH
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:cor-church-camp-2027@dannellim.github.io
+DTSTAMP:20261126T000000Z
+DTSTART;VALUE=DATE:20270529
+DTEND;VALUE=DATE:20270601
+SUMMARY:复活堂教会生活营 2027
+LOCATION:迪沙鲁福朋喜来登酒店 Four Points by Sheraton Desaru\, Ja
+ lan Kempas 2\, Taman Desaru Utama\, 81930 Bandar Penawar\, Johor\, Malaysi
+ a
+DESCRIPTION:敬请预留日期！复活堂教会生活营 2027。https://da
+ nnellim.github.io/corchurchcamp2027presence/zh/
+URL:https://dannellim.github.io/corchurchcamp2027presence/zh/
+END:VEVENT
+END:VCALENDAR
